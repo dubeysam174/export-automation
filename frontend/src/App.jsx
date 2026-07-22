@@ -12,133 +12,92 @@ import API from "./services/api";
 import "./App.css";
 
 function App() {
+  const [buyers, setBuyers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [pdf, setPdf] = useState(null);
 
-  const [buyers,setBuyers]=useState([]);
-  const [loading,setLoading]=useState(false);
-  const [sending,setSending]=useState(false);
-  const [pdf,setPdf]=useState(null);
-
-  const searchBuyers=async(keyword)=>{
-
-    try{
-
+  const searchBuyers = async (keyword) => {
+    try {
       setLoading(true);
 
-      const response=await API.get(
+      const response = await API.get(
         `/search?keyword=${encodeURIComponent(keyword)}`
       );
 
       setBuyers(response.data);
-
-    }
-    catch(error){
-
+    } catch (error) {
       console.log(error);
       alert("Unable to search buyers");
-
-    }
-    finally{
-
+    } finally {
       setLoading(false);
-
     }
-
   };
 
-  const sendEmails=async()=>{
-
-    if(!pdf){
+  const sendEmails = async () => {
+    if (!pdf) {
       alert("Please upload PDF.");
       return;
     }
 
-    try{
-
+    try {
       setSending(true);
 
-      const formData=new FormData();
+      const formData = new FormData();
+      formData.append("pdf", pdf);
 
-      formData.append("pdf",pdf);
-
-      const response=await API.post(
-        "/send",
-        formData,
-        {
-          headers:{
-            "Content-Type":"multipart/form-data"
-          }
-        }
-      );
+      const response = await API.post("/send", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       alert(
         `Emails Sent : ${response.data.sent}\nFailed : ${response.data.failed}`
       );
-
-    }
-    catch(error){
-
+    } catch (error) {
       console.log(error);
       alert("Unable to send emails");
-
-    }
-    finally{
-
+    } finally {
       setSending(false);
-
     }
-
   };
 
-  return(
+  return (
+    <div className="app">
+      <Navbar />
 
-   
-  <div className="app">
+      <main className="main-content">
+        <DashboardCards buyers={buyers} />
 
-    <Navbar />
-
-    <DashboardCards buyers={buyers} />
-
-    <main className="container">
-
-      <section className="section">
-        <SearchForm
-          onSearch={searchBuyers}
-          loading={loading}
-        />
-      </section>
-
-      
-        <BuyersTable buyers={buyers} />
-    
-
-      <section className="section">
-        <UploadPDF
-          pdf={pdf}
-          setPdf={setPdf}
-        />
-      </section>
-
-      {buyers.length > 0 && (
         <section className="section">
-          <button
-            className="send-btn"
-            onClick={sendEmails}
-            disabled={sending}
-          >
-            {sending ? "Sending..." : "📧 Send Emails"}
-          </button>
+          <SearchForm onSearch={searchBuyers} loading={loading} />
         </section>
-      )}
 
-    </main>
+        <section className="section">
+          <BuyersTable buyers={buyers} />
+        </section>
 
-    <Footer />
+        <section className="section">
+          <UploadPDF pdf={pdf} setPdf={setPdf} />
+        </section>
 
-  </div>
-);
+        {buyers.length > 0 && (
+          <section className="section center">
+            <button
+              className="send-btn"
+              onClick={sendEmails}
+              disabled={sending}
+            >
+              {sending ? "Sending..." : "📧 Send Emails"}
+            </button>
+          </section>
+        )}
+      </main>
 
-  
-
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

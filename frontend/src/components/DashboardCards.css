@@ -1,0 +1,139 @@
+.dashboard{
+
+    width:92%;
+
+    max-width:1400px;
+
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+}
+
+/* Card */
+
+.dashboard-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:28px;
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    transition:.35s;
+
+    box-shadow:
+    0 12px 30px rgba(0,0,0,.30);
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.45);
+
+}
+
+/* Icon */
+
+.icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    color:white;
+
+}
+
+/* Individual Gradients */
+
+.users{
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #60a5fa
+    );
+
+}
+
+.emails{
+
+    background:linear-gradient(
+        135deg,
+        #10b981,
+        #34d399
+    );
+
+}
+
+.campaign{
+
+    background:linear-gradient(
+        135deg,
+        #f59e0b,
+        #fbbf24
+    );
+
+}
+
+/* Text */
+
+.card-content h1{
+
+    font-size:38px;
+
+    color:white;
+
+    font-weight:700;
+
+}
+
+.card-content p{
+
+    margin-top:8px;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+}
+
+/* Responsive */
+
+@media(max-width:1000px){
+
+.dashboard{
+
+grid-template-columns:1fr;
+
+}
+
+}

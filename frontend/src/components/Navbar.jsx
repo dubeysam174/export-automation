@@ -23,24 +23,6 @@ function Navbar() {
 
       </div>
 
-      <ul className="nav-links">
-
-        <li>
-          <FaSearch />
-          Search
-        </li>
-
-        <li>
-          <FaEnvelope />
-          Emails
-        </li>
-
-        <li>
-          <FaFilePdf />
-          Campaign
-        </li>
-
-      </ul>
 
     </header>
   );

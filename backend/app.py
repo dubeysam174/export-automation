@@ -15,9 +15,6 @@ CORS(app)
 app.register_blueprint(search_bp, url_prefix="/api")
 
 
-# -------------------------------
-# API Home
-# -------------------------------
 @app.route("/api")
 def api_home():
     return {
@@ -25,9 +22,7 @@ def api_home():
     }
 
 
-# -------------------------------
 # Serve React App
-# -------------------------------
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve(path):
